@@ -139,4 +139,6 @@ void wifi_init_sta()
     ESP_ERROR_CHECK(esp_event_handler_unregister(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler));
     ESP_ERROR_CHECK(esp_event_handler_unregister(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler));
     vEventGroupDelete(s_hWifiStaEventGroup);
+    
+    vTaskDelay( pdMS_TO_TICKS(1000) );
 }

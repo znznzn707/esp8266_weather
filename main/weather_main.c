@@ -5,6 +5,7 @@
 
 #include "wifi_sta.h"
 #include "my_sntp.h"
+#include "weather_api.h"
 
 
 static const char *s_pbyTag = "weather_main";
@@ -28,12 +29,15 @@ void time_task()
 
 void app_main()
 {
-
+    weather_now_resp_body_t now_resp_body = {0};
+    
     ESP_LOGI(s_pbyTag, "app_main...\n");
 
     wifi_init_sta();
     sntp_initialize();
-
-    xTaskCreate(time_task, "time_task", 2048, NULL, 10, NULL);
+    xTaskCreate(time_task, "time_task", 1024, NULL, 10, NULL);
     
+    weather_get_now("key", "xian", "zh-Hans", "c", &now_resp_body);
+    ESP_LOGI(s_pbyTag, "text=%s, code=%d,temp=%d", now_resp_body.m_text, now_resp_body.m_code, now_resp_body.m_temperature);
+
 }
