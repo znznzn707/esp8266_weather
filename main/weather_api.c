@@ -13,7 +13,13 @@
 static const char *s_TAG = "weather_api";
 
 
-
+//----------------------------------------------------------------------------------------
+/**
+ * @brief http事件处理函数
+ * 
+ * @param evt 
+ * @return esp_err_t 
+ */
 static esp_err_t _http_event_handle(esp_http_client_event_t *evt)
 {
     switch(evt->event_id) 
@@ -49,7 +55,16 @@ static esp_err_t _http_event_handle(esp_http_client_event_t *evt)
 }
 
 
-
+//------------------------------------------------------------------------------------
+/**
+ * @brief 获取当天天气实况
+ * 
+ * @param key 私钥
+ * @param location 位置 英文/中文 
+ * @param language 语言
+ * @param unit c 表示温度；f 表示湿度
+ * @param now_resp_body 
+ */
 void weather_get_now(char *key, char *location, char *language, char *unit,
                      weather_now_resp_body_t *now_resp_body)
 {
@@ -111,4 +126,18 @@ void weather_get_now(char *key, char *location, char *language, char *unit,
                 cJSON_Delete(root);
             }
     }
+}
+
+//TODO
+//---------------------------------------------------------------------------------------
+/**
+ * @brief 获取未来三天的天气
+ * 
+ * @param key 私钥
+ * @param location 位置 英文/中文 
+ * @param daily_resp_body 
+ */
+void weather_get_daily(char *key, char *location, char *language,
+                       weather_daily_resp_body_t *daily_resp_body)
+{
 }

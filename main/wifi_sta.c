@@ -18,6 +18,16 @@ static const char *s_pbyTag = "wifi_sta";
 
 static EventGroupHandle_t s_hWifiStaEventGroup;
 
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief wifi事件处理函数
+ * 
+ * @param event_handler_arg 
+ * @param event_base 
+ * @param event_id 
+ * @param event_data 
+ */
 static void wifi_event_handler(void *event_handler_arg,
                                esp_event_base_t event_base,
                                int32_t event_id,
@@ -61,6 +71,11 @@ static void wifi_event_handler(void *event_handler_arg,
 }
 
 
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 如果wifi sta初始化失败，则初始化智能配网
+ * 
+ */
 static void smart_init_config()
 {
     smartconfig_start_config_t smartconfig_start_config = SMARTCONFIG_START_CONFIG_DEFAULT();
@@ -89,6 +104,8 @@ static void smart_init_config()
     ESP_ERROR_CHECK(esp_event_handler_unregister( SC_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler) );
 }
 
+
+//-----------------------------------------------------------------------------------
 /**
  * @brief wifi sta初始化
  *

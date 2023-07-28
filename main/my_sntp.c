@@ -9,6 +9,11 @@
 static const char *s_TAG = "my_sntp";
 
 
+//------------------------------------------------------------------------------------
+/**
+ * @brief sntp初始化
+ * 
+ */
 void sntp_initialize()
 {
     ESP_LOGI(s_TAG, "init sntp...");
@@ -21,6 +26,15 @@ void sntp_initialize()
     tzset();
 }
 
+
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief 获取时间，参数可传一个
+ * 
+ * @param now 时间戳
+ * @param timeinfo 时间结构体
+ */
 void obtain_time(time_t *now, struct tm *timeinfo)
 {
     time_t now_tmp = 0;
