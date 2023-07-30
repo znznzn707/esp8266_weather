@@ -3,6 +3,6 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := weather_main
+PROJECT_NAME := esp_weather
 
 include $(IDF_PATH)/make/project.mk
