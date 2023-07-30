@@ -10,6 +10,7 @@
 
 #define DELAY_MS(ms)                    vTaskDelay(pdMS_TO_TICKS(ms))          
 
+//----------------------------------------------------------------------------------
 /**
  * @brief 屏幕gpio初始化
  * 
@@ -38,7 +39,78 @@ void lcd_init()
     lcd_gpio_init();
 }
 
+//---------------------------------------------------------------------------------
+/**
+ * @brief 在指定区域填充颜色
+ * 
+ * @param xsta 
+ * @param ysta 
+ * @param xend 
+ * @param yend 
+ * @param color 
+ */
 void lcd_draw(unsigned short xsta,unsigned short ysta,unsigned short xend,unsigned short yend,unsigned short* color)
 {
 
+}
+
+
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief spi写一字节
+ * 
+ * @param data 
+ */
+static void spi_write_byte(unsigned char data)
+{
+
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 写8位数据
+ * 
+ * @param data8 
+ */
+void lcd_write_data8(unsigned char data8)
+{
+
+}
+
+//---------------------------------------------------------------------------------
+/**
+
+ * @brief 写16位数据
+ * 
+ * @param data16 
+ */
+void lcd_write_data16(unsigned short data16)
+{
+
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 写8位指令
+ * 
+ * @param cmd 
+ */
+void lcd_write_cmd(unsigned char cmd)
+{
+
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 设置起始和结束地址
+ * 
+ * @param x1 
+ * @param y1 
+ * @param x2 
+ * @param y2 
+ */
+void lcd_set_addr(unsigned short xsta, unsigned short ysta,
+                  unsigned short xend, unsigned short yend)
+{
 }
