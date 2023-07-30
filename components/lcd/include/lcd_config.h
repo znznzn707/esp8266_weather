@@ -9,7 +9,7 @@
 
 
 #define LCD_INIT_FUN()              lcd_init()
-#define LCD_FILL_FUN()              lcd_fill()
-
+#define LCD_DRAW_FUN(xsta, ysta, xend, yend, color) \
+    lcd_draw(xsta, ysta, xend, yend, color)
 
 #endif // !LCD_CONFIG_H_
