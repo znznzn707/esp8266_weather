@@ -9,6 +9,7 @@
 #include "my_sntp.h"
 #include "weather_api.h"
 #include "lcd_config.h"
+#include "timer.h"
 
 static const char *s_pbyTag = "weather_main";
 
@@ -34,6 +35,7 @@ static void lvgl_task()
     while (1)
     {
         lv_tick_inc(5);
+        lv_task_handler();
         vTaskDelay(pdMS_TO_TICKS(5));
     }
 }
@@ -58,6 +60,7 @@ void app_main()
 
     // wifi_init_sta();
     // sntp_initialize();
+    timer_init();
     lcd_init();
     lv_init();
     lv_port_disp_init();
@@ -70,7 +73,6 @@ void app_main()
     
     while (1)
     {
-        lv_task_handler();
     }
     
 }
