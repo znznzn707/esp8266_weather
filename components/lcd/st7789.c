@@ -2,7 +2,6 @@
 #include <freertos/task.h>
 #include <esp_system.h>
 #include <driver/gpio.h>
-#include <esp_log.h>
 
 #include "st7789.h"
 
@@ -144,13 +143,13 @@ void lcd_init()
 void lcd_draw(unsigned short xsta,unsigned short ysta,unsigned short xend,unsigned short yend,unsigned short* color)
 {
 	unsigned int i,all;
-	unsigned short* p_color =color;
+	unsigned short* color_p =color;
 
     lcd_set_addr(xsta, ysta, xend, yend);
     all = (xend - xsta + 1) * (yend - ysta + 1);
     for(i = 0; i < all; i++)
     {
-        lcd_write_data16(*p_color++);
+        lcd_write_data16(*color_p++);
     }
 }
 
