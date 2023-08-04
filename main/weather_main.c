@@ -2,14 +2,13 @@
 #include <freertos/task.h>
 #include <esp_system.h>
 #include <esp_log.h>
-#include <lvgl.h>
-#include <lv_port_disp.h>
 
 #include "wifi_sta.h"
 #include "my_sntp.h"
 #include "weather_api.h"
 #include "lcd_config.h"
 #include "timer.h"
+#include "gui.h"
 
 static const char *s_pbyTag = "weather_main";
 
@@ -30,16 +29,7 @@ void time_task()
     }
 }
 
-static void lvgl_task()
-{
-    while (1)
-    {
-        lv_tick_inc(5);
-        lv_task_handler();
-        vTaskDelay(pdMS_TO_TICKS(5));
-    }
-}
-
+#if 0
 static void lv_demo_task(void *pvParameters)
 {
     lv_obj_t *label = lv_label_create(lv_scr_act());
@@ -53,6 +43,7 @@ static void lv_demo_task(void *pvParameters)
     lv_label_set_text(label, "#ff0080 abcde##00ff80 12345#");           //字体颜色
     lv_obj_set_style_text_font(label, &lv_font_montserrat_16, 0);
 }
+#endif // 0
 
 void app_main()
 {
@@ -60,15 +51,13 @@ void app_main()
 
     // wifi_init_sta();
     // sntp_initialize();
-    timer_init();
+    // timer_init();
     lcd_init();
-    lv_init();
-    lv_port_disp_init();
+    gui_init();
     
-    lv_demo_task(NULL);
 
     // xTaskCreate(time_task, "time_task", 1024, NULL, 10, NULL);
-    xTaskCreate(lvgl_task, "lvgl_task", 2048, NULL, 10, NULL);
+    xTaskCreate(gui_task, "gui_task", 2048, NULL, 10, NULL);
     
     
     while (1)
