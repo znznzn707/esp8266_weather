@@ -20,4 +20,6 @@ void sntp_initialize();
  */
 void obtain_time(time_t *now, struct tm *timeinfo);
 
+extern volatile time_t g_time;
+
 #endif // !MY_SNTP_H

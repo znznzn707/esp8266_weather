@@ -12,20 +12,31 @@
 
 static const char *s_pbyTag = "weather_main";
 
+extern volatile time_t g_time;
+
+
 void time_task()
 {
     time_t now = 0;
     struct tm timeinfo = {0};
-    
+    char strftime_datebuf[32] = {0}; // 保存日期
+    char strftime_timebuf[32] = {0}; // 保存日期
+
     while (1)
     {
         vTaskDelay(pdMS_TO_TICKS(1000));
+        // time(&now);
+        // localtime_r(&now, &timeinfo);
         obtain_time(&now, &timeinfo);
-
-        ESP_LOGI(s_pbyTag, "now=%ld", now);
-        ESP_LOGI(s_pbyTag, "year=%d, mon=%d, mday=%d, hour=%d, min=%d, sec=%d",
-                 timeinfo.tm_year, timeinfo.tm_mon, timeinfo.tm_mday,
-                 timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+        strftime(strftime_datebuf, sizeof(strftime_datebuf), "%F", &timeinfo); // 取出日期/年月日
+        strftime(strftime_timebuf, sizeof(strftime_timebuf), "%T", &timeinfo); // 取出时间/时分秒
+        ESP_LOGI(s_pbyTag, "year=%d", timeinfo.tm_year);
+        ESP_LOGI(s_pbyTag, "now1=%s", strftime_datebuf);
+        ESP_LOGI(s_pbyTag, "now2=%s", strftime_timebuf);
+        // ESP_LOGI(s_pbyTag, "now=%ld", now);
+        // ESP_LOGI(s_pbyTag, "year=%d, mon=%d, mday=%d, hour=%d, min=%d, sec=%d",
+                //  timeinfo.tm_year, timeinfo.tm_mon, timeinfo.tm_mday,
+                //  timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
     }
 }
 
@@ -49,14 +60,14 @@ void app_main()
 {
     ESP_LOGI(s_pbyTag, "app_main...\n");
 
-    // wifi_init_sta();
-    // sntp_initialize();
-    // timer_init();
+    wifi_init_sta();
     lcd_init();
+    sntp_initialize();
+    obtain_time(&g_time, NULL);
+    timer_init();
     gui_init();
     
-
-    // xTaskCreate(time_task, "time_task", 1024, NULL, 10, NULL);
+    // xTaskCreate(time_task, "time_task", 2048, NULL, 10, NULL);
     xTaskCreate(gui_task, "gui_task", 2048, NULL, 10, NULL);
     
     

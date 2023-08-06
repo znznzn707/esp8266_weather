@@ -7,7 +7,7 @@
 #include "my_sntp.h"
 
 static const char *s_TAG = "my_sntp";
-
+volatile time_t g_time;
 
 //------------------------------------------------------------------------------------
 /**
@@ -24,6 +24,8 @@ void sntp_initialize()
     //设置东八区
     setenv("TZ", "CST-8", 1);
     tzset();
+
+    g_time = 0;
 }
 
 
@@ -38,14 +40,21 @@ void sntp_initialize()
 void obtain_time(time_t *now, struct tm *timeinfo)
 {
     time_t now_tmp = 0;
+    struct tm timeinfo_tmp = {0};
 
-    time(&now_tmp);
+    do
+    {
+        time(&now_tmp);
+        localtime_r(&now_tmp, &timeinfo_tmp);
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    } while (timeinfo_tmp.tm_year == 70);
+
     if (now)
     {
         *now = now_tmp;
     }
     if (timeinfo)
     {
-        localtime_r(&now_tmp, timeinfo);
+        *timeinfo = timeinfo_tmp;
     }
 }
