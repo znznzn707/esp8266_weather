@@ -61,7 +61,7 @@ static void display_date_time()
     {
         s_time_label = lv_label_create(lv_scr_act());
         lv_obj_set_style_text_font(s_time_label, &lv_font_montserrat_48, LV_STATE_DEFAULT);
-        lv_obj_set_pos(s_time_label, lv_pct(30), lv_pct(15));
+        lv_obj_set_pos(s_time_label, lv_pct(25), lv_pct(15));
         lv_label_set_recolor(s_time_label, true);
     }
     lv_label_set_text(s_time_label, time_label_buf);
@@ -71,7 +71,7 @@ static void display_date_time()
     {
         s_date_label = lv_label_create(lv_scr_act());
         lv_obj_set_style_text_font(s_date_label, &weather_font, LV_STATE_DEFAULT);
-        lv_obj_align_to(s_date_label, s_time_label, LV_ALIGN_OUT_BOTTOM_LEFT, -30, 40);
+        lv_obj_set_pos(s_date_label, lv_pct(5), lv_pct(50));
         lv_label_set_recolor(s_date_label, true);
     }
     lv_label_set_text(s_date_label, date_label_buf);
@@ -161,7 +161,7 @@ void gui_init()
  */
 void gui_task()
 {
-    uint32_t gui_delay_ms = 1000 * 30;   //30s
+    uint32_t gui_delay_ms = 1000 * 20;   //20s
     gui_create();
 
     while (1)
