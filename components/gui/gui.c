@@ -10,7 +10,7 @@
 #include "gui.h"
 #include "my_sntp.h"
 #include "weather.h"
-#include "weather_img.h"
+#include "weather_white_img.h"
 #include "weather_font.h"
 
 static const char *s_TAG = "gui";
@@ -61,7 +61,7 @@ static void display_date_time()
     {
         s_time_label = lv_label_create(lv_scr_act());
         lv_obj_set_style_text_font(s_time_label, &lv_font_montserrat_48, LV_STATE_DEFAULT);
-        lv_obj_set_pos(s_time_label, lv_pct(25), lv_pct(15));
+        lv_obj_set_pos(s_time_label, lv_pct(30), lv_pct(15));
         lv_label_set_recolor(s_time_label, true);
     }
     lv_label_set_text(s_time_label, time_label_buf);
@@ -94,6 +94,7 @@ static void display_weather()
     {
         s_weather_img = lv_img_create(lv_scr_act());
         lv_obj_set_pos(s_weather_img, lv_pct(70), lv_pct(50));
+        lv_obj_set_size(s_weather_img, 50, 50);
     }
     lv_img_set_src(s_weather_img, &GET_IMG_DSC(g_now_resp_body.m_code));
     #endif // 0
@@ -102,8 +103,10 @@ static void display_weather()
 
     memcpy(weather_label_buf, s_text_color_p, color_len);
 
-    ESP_LOGI(s_TAG, "m_temp=%d, m_text=%s", g_now_resp_body.m_temperature, g_now_resp_body.m_text);
-    sprintf(weather_label_buf + color_len, "%s %d°C#", g_now_resp_body.m_text, g_now_resp_body.m_temperature);
+    ESP_LOGI(s_TAG, "m_code=%d, m_temp=%d, m_text=%s", g_now_resp_body.m_code,
+             g_now_resp_body.m_temperature, g_now_resp_body.m_text);
+    sprintf(weather_label_buf + color_len, "%s %d°C#", g_now_resp_body.m_text,
+            g_now_resp_body.m_temperature);
     ESP_LOGI(s_TAG, "weather_label_buf=%s", weather_label_buf);
 
     if( !s_weather_label )

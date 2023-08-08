@@ -3,8 +3,10 @@
  * Bpp: 4
  * Opts: 
  ******************************************************************************/
+#if 1
 #ifndef WEATHER_FONT_H_
 #define WEATHER_FONT_H_
+
 
 
 #include "lvgl.h"
@@ -2564,3 +2566,4 @@ lv_font_t weather_font = {
 };
 
 #endif // !WEATHER_FONT_H_
+#endif // 0
