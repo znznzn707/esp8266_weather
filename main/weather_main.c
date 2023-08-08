@@ -6,6 +6,7 @@
 #include "wifi_sta.h"
 #include "my_sntp.h"
 #include "weather_api.h"
+#include "weather.h"
 #include "lcd_config.h"
 #include "timer.h"
 #include "gui.h"
@@ -62,11 +63,14 @@ void app_main()
 
     wifi_init_sta();
     lcd_init();
+    gui_init();
+    
+    xTaskCreate(weather_task, "weather_task", 2048, NULL, 11, NULL);
+   
     sntp_initialize();
     obtain_time(&g_time, NULL);
     timer_init();
-    gui_init();
-    
+
     // xTaskCreate(time_task, "time_task", 2048, NULL, 10, NULL);
     xTaskCreate(gui_task, "gui_task", 2048, NULL, 10, NULL);
     

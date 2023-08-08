@@ -1,4 +1,5 @@
 #ifndef WEATHER_API_H
+#define WEATHER_API_H
 
 typedef struct weather_now_resp_body
 {

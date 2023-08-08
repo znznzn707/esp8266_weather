@@ -18,7 +18,8 @@ void sntp_initialize()
 {
     ESP_LOGI(s_TAG, "init sntp...");
     sntp_setoperatingmode(SNTP_OPMODE_POLL);
-    sntp_setservername(0, "pool.ntp.org");
+    // sntp_setservername(0, "pool.ntp.org");
+    sntp_setservername(0, "1.cn.pool.ntp.org");
     sntp_init();
 
     //设置东八区
@@ -46,7 +47,7 @@ void obtain_time(time_t *now, struct tm *timeinfo)
     {
         time(&now_tmp);
         localtime_r(&now_tmp, &timeinfo_tmp);
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(500));
     } while (timeinfo_tmp.tm_year == 70);
 
     if (now)
